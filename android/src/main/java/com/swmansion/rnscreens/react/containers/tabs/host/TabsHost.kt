@@ -240,7 +240,7 @@ class TabsHost(
     }
 
     override fun didMountItems(uiManager: UIManager) {
-        container.flushPendingUpdates()
+        container.endUpdateBatch()
     }
 
     /**
@@ -257,7 +257,9 @@ class TabsHost(
 
     override fun willDispatchViewUpdates(uiManager: UIManager) = Unit
 
-    override fun willMountItems(uiManager: UIManager) = Unit
+    override fun willMountItems(uiManager: UIManager) {
+        container.beginUpdateBatch()
+    }
 
     override fun didDispatchMountItems(uiManager: UIManager) = Unit
 
