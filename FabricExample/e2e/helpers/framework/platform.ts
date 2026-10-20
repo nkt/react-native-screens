@@ -84,6 +84,15 @@ export const isIPadTarget =
 
 export const describeIfIPad = isIPadTarget ? describe : describe.skip;
 
+/**
+ * Inferred from `RNS_APPLE_SIM_NAME` like {@link isIPadTarget}, e.g.
+ * RNS_APPLE_SIM_NAME="iPhone Duo" (the foldable simulator, iOS 27.1+).
+ */
+export const isIPhoneDuoTarget =
+  isIOS && process.env.RNS_APPLE_SIM_NAME?.trim() === 'iPhone Duo';
+
+export const describeIfIPhoneDuo = isIPhoneDuoTarget ? describe : describe.skip;
+
 /** `true` on iOS at `version` or newer; `false` on Android. */
 export function isIOSVersionAtLeast(version: string): boolean {
   return isIOS && isVersionEqualOrHigherThan(getIOSVersionNumber(), version);

@@ -1,5 +1,7 @@
+import React from 'react';
 import App from '../apps';
-import { LogBox } from 'react-native';
+import * as IssueTests from '../apps/src/tests/issue-tests';
+import { LogBox, Platform, Settings } from 'react-native';
 import { featureFlags } from 'react-native-screens';
 
 featureFlags.experiment.synchronousScreenUpdatesEnabled = true;
@@ -15,4 +17,17 @@ featureFlags.stable.debugLogging = true;
 // uncaught errors still open the full-screen LogBox.
 LogBox.ignoreAllLogs();
 
-export default App;
+// e2e: `device.launchApp({ launchArgs: { rnsE2EIssueTest: 'Test4989' } })`
+// renders that issue test as the app root, so it mounts on the cold launch
+// instead of after navigating from the examples list. iOS only: launch args
+// land in NSUserDefaults, which `Settings` reads.
+const e2eIssueTestName: unknown =
+  Platform.OS === 'ios' ? Settings.get('rnsE2EIssueTest') : undefined;
+const E2EIssueTest =
+  typeof e2eIssueTestName === 'string' && e2eIssueTestName in IssueTests
+    ? IssueTests[e2eIssueTestName as keyof typeof IssueTests]
+    : undefined;
+
+export default function FabricExampleApp() {
+  return E2EIssueTest ? <E2EIssueTest /> : <App />;
+}

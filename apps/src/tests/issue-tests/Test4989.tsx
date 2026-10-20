@@ -19,7 +19,9 @@ function ContentView() {
   const { routeKey } = useTabsNavigationContext();
   return (
     <CenteredLayoutView style={styles.content}>
-      <Text style={styles.title}>{routeKey}</Text>
+      <Text style={styles.title} testID="route-key-label">
+        {routeKey}
+      </Text>
       <Text style={styles.step}>
         1. On an iPhone Duo, unfold the device and cold-launch the app.
       </Text>
@@ -41,6 +43,7 @@ const ROUTE_CONFIGS: TabRouteConfig[] = [
     options: {
       ...DEFAULT_TAB_ROUTE_OPTIONS,
       title: 'First',
+      tabBarItemTestID: 'tab-bar-item-first',
     },
   },
   {
@@ -49,6 +52,7 @@ const ROUTE_CONFIGS: TabRouteConfig[] = [
     options: {
       ...DEFAULT_TAB_ROUTE_OPTIONS,
       title: 'Second',
+      tabBarItemTestID: 'tab-bar-item-second',
     },
   },
   {
@@ -57,6 +61,7 @@ const ROUTE_CONFIGS: TabRouteConfig[] = [
     options: {
       ...DEFAULT_TAB_ROUTE_OPTIONS,
       title: 'Third',
+      tabBarItemTestID: 'tab-bar-item-third',
     },
   },
 ];
